@@ -61,7 +61,7 @@ def display_pdf(img, pdf_document, pdf_path, width, height):
         print(f"Drag ended at: {end_position}")
 
         if start_position and end_position:
-            add_signature_to_pdf(pdf_document, pdf_path, width, height)
+            add_image_to_pdf_with_preview(canvas, pdf_document, width, height)
         else:
             print("Invalid drag operation.")
 
@@ -70,10 +70,30 @@ def display_pdf(img, pdf_document, pdf_path, width, height):
     canvas.bind("<B1-Motion>", on_mouse_drag)  # 드래그 중
     canvas.bind("<ButtonRelease-1>", on_mouse_up)  # 드래그 종료
 
-def add_signature_to_pdf(pdf_document, pdf_path, width, height):
+def update_preview(canvas, pdf_document, width, height):
+    """
+    현재 PDF 상태를 미리보기로 업데이트
+    """
+    page = pdf_document[0]
+    pix = page.get_pixmap(dpi=72 * scale_factor)  # 고해상도로 렌더링
+    img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+
+    # Tkinter 캔버스에 새 이미지 표시
+    img_tk = ImageTk.PhotoImage(img)
+    canvas.create_image(0, 0, anchor="nw", image=img_tk)
+    canvas.image = img_tk
+    print("Preview updated.")
+
+    save_button = filedialog.Button(root, text="Save PDF", command=lambda: save_pdf(pdf_document))
+    save_button.pack()
+    #root.bind("<Control-z>", lambda event: undo_last_action()) # 추후 개발을 위함
+    root.bind("<Control-s>", lambda event: save_pdf(pdf_document))
+
+
+def add_image_to_pdf(pdf_document, width, height):
     global start_position, end_position
     if not start_position or not end_position:
-        print("No valid drag region selected.")
+        print("No valid drag region selected for image.")
         return
 
     # 드래그 영역 계산
@@ -112,11 +132,29 @@ def add_signature_to_pdf(pdf_document, pdf_path, width, height):
     page = pdf_document[0]
     page.insert_image(signature_rect, stream=img_bytes)
 
-    # 수정된 PDF 저장
-    output_path = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF Files", "*.pdf")])
+    print(f"Inserted image in {signature_rect}")
+
+def save_pdf(pdf_document):
+    """
+    PDF 파일을 저장하는 함수
+    """
+    output_path = filedialog.asksaveasfilename(
+        defaultextension=".pdf",
+        filetypes=[("PDF Files", "*.pdf")],
+        title="Save PDF As"
+    )
     if output_path:
         pdf_document.save(output_path)
-        print(f"Signed PDF saved as: {output_path}")
+        print(f"PDF saved as: {output_path}")
+    else:
+        print("Save operation cancelled.")
+
+
+def add_image_to_pdf_with_preview(canvas, pdf_document, width, height):
+    add_image_to_pdf(pdf_document, width, height)  # 이미지 삽입
+    update_preview(canvas, pdf_document, width, height)  # 미리보기 업데이트
+    
+
 
 # Tkinter GUI 생성
 root = Tk()
