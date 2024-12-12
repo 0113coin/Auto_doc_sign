@@ -10,7 +10,8 @@
 
 #### 사용법
 
-![[GIFMaker_me.gif]]
+[![[GIFMaker_me.gif]]](https://github.com/user-attachments/assets/82d24d48-7f2b-41a9-bcce-483e0e74eb34
+)
 
 1. main.py 실행
 2. OPEN PDF 버튼 클릭
