@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Signer</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1339474880628926"
-     crossorigin="anonymous"></script>
     <style>
         /* Reset styles */
         body, html {
@@ -80,6 +78,32 @@
             margin-top: 20px;
             max-width: 100%;
         }
+        #pageControls {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        margin-top: 10px;
+        }
+
+        #pageControls button {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+        }
+
+        #pageControls button:hover {
+            background-color: #e0e0e0;
+        }
+
+        #pageControls button.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -98,12 +122,16 @@
             <label for="signatureUpload">Upload Signature:</label>
             <input type="file" id="signatureUpload" accept="image/*">
         </div>
-        
         <!-- Buttons -->
-        <button onclick="downloadPDF()">Download Signed PDF</button>
+        <button id = "downloadButton">Download Signed PDF</button>
         
         <!-- Canvas -->
         <canvas id="pdfCanvas" width="500" height="700"></canvas>
+        <!-- Page count -->
+        <div id="pageControls" style="margin-top: 10px; text-align: center;"></div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
