@@ -1,44 +1,95 @@
-## 1. 프로그램 개요 
+# PDF Signature Tool
 
-대학생이 되면서 여러가지 서류에 자기 서명을 직접 넣고 이를 제출해야 할 일이 많아졌는데,이러한 서명을 전자로 할 때 자기 이름을 넣거나 혹은 서명의 이미지를 따로 업로드하고 입력하는 과정이 너무 번거롭다고 생각하여 이를 자동화하고자 함.
+## Overview
 
-## 2. 기능 구현
+The **PDF Signature Tool** is a web-based application that allows users to:
 
-1. PDF 서명 삽입
-2. 서명 삽입 미리보기
-3. 서명된 파일 저장
+- Upload PDF documents for viewing.
+- Add signature images to specific locations on the document by dragging and dropping.
+- Navigate through multi-page PDFs using a dynamic page control interface.
+- Download the signed document as a new PDF.
 
-#### 사용법
+This project is designed to streamline the process of digitally signing contracts and agreements, offering an intuitive and efficient user experience.
 
-[![[GIFMaker_me.gif]]](https://github.com/user-attachments/assets/82d24d48-7f2b-41a9-bcce-483e0e74eb34
-)
+## Features
 
-1. main.py 실행
-2. OPEN PDF 버튼 클릭
-3. 편집할 PDF 버튼 클릭
-4. ctrl+s 로 다른 이름 저장
-## 3. 코드 작성 과정
+- **PDF Upload**: Easily upload PDF documents for processing.
+- **Signature Upload**: Add your signature as an image file (PNG or JPEG).
+- **Drag-and-Drop Interface**: Place the signature at your desired location by dragging within the PDF view.
+- **Multi-Page Navigation**: Navigate through documents using interactive page controls.
+  - The first page is always accessible.
+  - Navigate through pages using `Next` and `Previous` buttons.
+  - A limited range of pages is displayed to maintain clarity.
+- **Real-Time Preview**: View the signature placement instantly before finalizing.
+- **PDF Download**: Save the signed document as a new PDF file.
 
-#### 사용 패키지 및 라이브러리
-PIL : 이미지 편집 및 조작
-tkinter : GUI(그래픽 사용자 인터페이스) 제공 및 사용자와의 상호작용
--  filedialog : 파일을 선택 및 저장할 경로 입력
-fitz : PDF 편집 및 수정 목적
-io : Pillow 이미지를 PyMuPDF가 이해할 수 있는 형식으로 변환
+## Technology Stack
 
-version : Python 3.12.8
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Libraries**:
+  - [PDF.js](https://mozilla.github.io/pdf.js/): For rendering PDF documents.
+  - [PDF-Lib](https://pdf-lib.js.org/): For editing and saving PDF files.
+- **Deployment**: Compatible with any web server or static hosting service.
 
-#### 개발 과정
-- ~ ver 1.0
-	hwp 를 편집하는 코드를 작성하려 했으나 이전에 시도했던 대로 사전에 해야할 과정이 많았고 이것보다는 차라리 PDF 를 편집하는 코드를 작성하고 hwp 를 pdf 로 변환하는 서비스를 따로 확장하는 것이 더 간단하다고 판단.
-	
-- ~ ver 1.2 
-	이후 UI 적인 편의성 향상을 위해서 뷰어 형식으로 사용하기 위해서 관련된 정보를 탐색.드래그 방식으로 이미지 입력 영역 지정 및 시각화 기능 추가
-	
-- ~ ver 1.3
-	시각적 기능 향상을 위해서 미리보기 기능 구현 및 ctrl+s 를 통한 편집된 파일 저장 기능
-- ~ ver 1.4 (예정) 
-	undo 기능 추가
+## Installation
 
-## 4. 참고 출처
-https://wikidocs.net/132610
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/pdf-signature-tool.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd pdf-signature-tool
+   ```
+3. Open the `index.html` file in your preferred browser to test locally.
+
+## Usage
+
+1. **Upload PDF**: Click on the `Upload PDF` button to select your document.
+2. **Upload Signature**: Click on the `Upload Signature` button to select your signature image.
+3. **Place Signature**:
+   - Drag and drop the signature image to your desired position on the PDF.
+   - Navigate to other pages to place signatures if necessary.
+4. **Download PDF**: Click on the `Download Signed PDF` button to save the modified file.
+
+## Future Enhancements
+
+- Add support for handwritten digital signatures.
+- Enable text annotations and stamps.
+- Improve multi-language support for international users.
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add feature-name"
+   ```
+4. Push to your branch:
+   ```bash
+   git push origin feature-name
+   ```
+5. Open a pull request.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Contact
+
+For inquiries or support, feel free to contact:
+- **Name**: [Your Name]
+- **Email**: your.email@example.com
+- **GitHub**: [Your GitHub Profile](https://github.com/your-username)
+
+---
+
+Thank you for using the PDF Signature Tool!
+
+
