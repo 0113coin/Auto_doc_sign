@@ -6,12 +6,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const signatureUpload = document.getElementById('signatureUpload');
     const downloadButton = document.getElementById('downloadButton');
 
+    const rangeInputContainer = document.getElementById('rangeInputContainer');
     let pdfDocument = null;
     let signatureImage = null;
     let currentPage = 1;
     let startX = 0, startY = 0, signatureSize = 100; // 기본 크기 설정
     const cachedPDFPages = {}; // 캐싱된 PDF 페이지 이미지
 
+
+    if (isMobile) {
+        rangeInputContainer.style.display = 'block'; // 모바일에서만 서명 크기 게이지 표시
+        const signatureSizeInput = document.getElementById('signatureSize');
+        let signatureSize = parseInt(signatureSizeInput.value, 10);
+
+        signatureSizeInput.addEventListener('input', (event) => {
+            signatureSize = parseInt(event.target.value, 10);
+            console.log(`Updated signature size: ${signatureSize}px`);
+        });
+    }
     // PDF 업로드
     pdfUpload.addEventListener('change', async (event) => {
         const file = event.target.files[0];
@@ -73,17 +85,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // PDF 캔버스 클릭 이벤트 (모바일 환경)
     pdfCanvas.addEventListener('click', (event) => {
-        if (!signatureImage) {
+        if (!signatureImage) { // 사인 이미지가 업로드되지 않은 경우
             alert('Upload a signature image first!');
             return;
         }
+        if (isMobile) {
+            const rect = pdfCanvas.getBoundingClientRect();
+            startX = (event.clientX - rect.left) * (pdfCanvas.width / rect.width);
+            startY = (event.clientY - rect.top) * (pdfCanvas.height / rect.height);
 
-        const rect = pdfCanvas.getBoundingClientRect();
-        startX = (event.clientX - rect.left) * (pdfCanvas.width / rect.width);
-        startY = (event.clientY - rect.top) * (pdfCanvas.height / rect.height);
-
-        // 캔버스에 서명 미리보기
-        canvasContext.drawImage(signatureImage, startX, startY, signatureSize, signatureSize / 2);
+            // 캔버스에 서명 미리보기
+            canvasContext.drawImage(signatureImage, startX, startY, signatureSize, signatureSize / 2);
+        }
     });
 
     // 드래그 앤 드롭 (PC 전용)
